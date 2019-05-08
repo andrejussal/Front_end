@@ -1,8 +1,117 @@
-.board{
-    width: 480px;
-    height: 480px;
-    border: 20px solid #B87A35;
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+body > * {
+    display: inline-block;
+    width: 100%;
+}
+
+    .board-and-move-screen {
+        width: 960px;
+        height: 560px;
+        margin: 20px 20px;
+    }
+
+        .header {
+            display: inline-block;
+            float: left;
+            width: 100%;
+            height: 30px;
+            background-color: #B87A35;
+            padding-left: 12px;
+            padding-top: 5px;
+            font-weight: bold;
+            color: white;
+        }
+        .letter {
+            margin-left: 44px;
+        }
+
+        .numbers {
+            display: inline-block;
+            float: left;            
+            margin-left: 10px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 41px;
+        }
+
+        .left-side,
+        .mid-side,
+        .right-side {
+            display: inline-block;
+            float: left;
+            width: 30px;
+            height: 480px;
+            background-color: #B87A35;
+            padding-top: 20px;
+        }        
+
+        .board {
+            display: inline-block;
+            float: left;
+            width: 480px;
+            height: 480px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .move-screen-left,
+        .move-screen-right {
+            display: inline-block;
+            float: left;
+            width: 195px;
+            height: 480px;
+            border-right: 2px solid #B87A35;
+            text-align: center;
+            padding: 6px 6px;
+        }
+        
+        .left-p,
+        .right-p {
+            display: inline-block;
+            float: left;
+            margin: 0 10px;
+            border-bottom: 1px solid #999;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            height: 93%;
+        }
+
+        .left-h3,
+        .right-h3 {
+            margin-top:-6px;
+        }
+
+            h3 {
+                font-size: 18px;
+                line-height: 38px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            p {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                padding: 6px 6px;
+            }
+
+        .footer {
+            display: inline-block;
+            float: left;
+            width: 100%;
+            height: 30px;
+            background-color: #B87A35;
+            padding-left: 11px;
+            padding-top: 5px;
+            font-weight: bold;
+            color: white;
+        }
+
 .square{
     float:left;
     width: 60px;
@@ -18,6 +127,6 @@
     background-color: #999;
 }
 .figure{
-    font-size: 60px;
+    font-size: 44px;
     cursor: pointer;
 }

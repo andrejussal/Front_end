@@ -1,3 +1,5 @@
+
+
 var divSquare = '<div id="s$coord" class="square $color"></div>'; // mazoji "s" reiskia "square", "coord" - koordinate
 
 $(function() {
