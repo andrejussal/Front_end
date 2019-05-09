@@ -1,40 +1,21 @@
-
-
-var divSquare = '<div id="s$coord" class="square $color"></div>'; // mazoji "s" reiskia "square", "coord" - koordinate
-
-$(function() {
-    // $('.board').html('');
-    // $('.board').append('<div class="square white"><div class="figure">&#9814</div></div>');
-    // $('.board').append('<div class="square black"><div class="figure">&#9820</div></div>');
-
-    addSquares();
-});
-
-function addSquares(){
-    $('.board').html('');
-    for (var coord = 0; coord < 64; coord++) {
-        // $('.board').append(divSquare.replace('$color', 'white'));
-        // $('.board').append(divSquare.replace('$color', 'black'));
-        $('.board').append(divSquare
-            .replace('$coord', coord) // duodamos koordinates per ID
-            .replace('$color', isBlackSquareAt(coord) ? 'black' : 'white'));
-    }
-}
-
-function isBlackSquareAt(coord){
-    return (coord % 8 + Math.floor(coord / 8)) % 2; // "Math.round" netinka, nes penkti langeliai kartoja ketvirtus
-}
-
 var map;
 var divSquare = '<div id="s$coord" class="square $color"></div>'; // mazoji "s" reiskia "square", "coord" - koordinate
 var divFigure = '<div id="f$coord" class="figure">$figure</div>'; // mazoji "f" reiskia "figure", "coord" - koordinate
 
-$(function() { // Dolerio zenklas pries "function naudojamas tam, kad priristi f-ja prie ivykio!!!. Svarbu"
+
+//------------------------ Dolerio zenklas pries "function naudojamas tam, kad priristi f-ja prie ivykio!!!. Svarbu"
+$(function() { 
     start();
 });
 
-function start() { // Daug visur visko inicializuota, todel reikia naujos f-jos viskam, kas vyksta pacioje pradzioje
+//------------------------ Daug visur visko inicializuota, todel reikia naujos f-jos viskam, kas vyksta pacioje pradzioje
+function start() { 
     map = new Array(64);
+    setHeader();
+    setFooter();
+    setLeftSide();
+    setMidSide();
+
     // $('.board').html('');
     // $('.board').append('<div class="square white"><div class="figure">&#9814</div></div>');
     // $('.board').append('<div class="square black"><div class="figure">&#9820</div></div>');
@@ -51,6 +32,41 @@ function start() { // Daug visur visko inicializuota, todel reikia naujos f-jos 
     setDraggable ();
 }
 
+//---------------------------- Prasideda raidziu is skaiciu spanai ------------------------
+function setHeader() {
+    var letter = ('abcdefgh');
+    $('.header').html('');
+    for (var i=0; i<8; i++) { 
+        $('.header').append('<span class="letter">'+ letter[i] +'</span>');
+    }
+}
+
+function setFooter() {
+    var letter = ('abcdefgh');
+    $('.footer').html('');
+    for (var i=0; i<8; i++) { 
+        $('.footer').append('<span class="letter">'+ letter[i] +'</span>');
+    }
+}
+
+function setLeftSide() {
+    var numbers = ('87654321');
+    $('.left-side').html('');
+    for (var i=0; i<8; i++) { 
+        $('.left-side').append('<span class="numbers">'+ numbers[i] +'</span>');
+    }
+}
+
+function setMidSide() {
+    var numbers = ('87654321');
+    $('mid-side').html('');
+    for (var i=0; i<8; i++) { 
+        $('.mid-side').append('<span class="numbers">'+ numbers[i] +'</span>');
+    }
+}
+//---------------------------- Baigiasi raidziu is skaiciu spanai ------------------------
+
+//---------------------------- Prasideda darbas su sachmatu lenta, figuromis, draginimu --
 function setDraggable() {
     $('.figure').draggable();
 }
@@ -85,7 +101,6 @@ function addSquares(){
             .replace('$coord', coord) // duodamos koordinates per ID
             .replace('$color', isBlackSquareAt(coord) ? 'black' : 'white'));
     }
-        setDroppable ();
 }
 
 function showFigures(figures) {
@@ -102,6 +117,7 @@ function showFigureAt(coord, figure) {
     $('#s' + coord).html(divFigure
         .replace('$coord', coord)
         .replace('$figure', getChessSymbol(figure)));
+        setDroppable ();
 }
 
 function getChessSymbol(figure) {
@@ -121,3 +137,4 @@ function getChessSymbol(figure) {
         default  : return '';
     }
 }
+//---------------------------- Baigiasi darbas su sachmatu lenta, figuromis, draginimu --
