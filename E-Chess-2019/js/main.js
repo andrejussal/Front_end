@@ -87,6 +87,7 @@ function moveFigure(frCoord, toCoord) {
     console.log('// ---');
     console.log('move from: '+ frCoord +' to: '+ toCoord);
     figure = 'P'; // Visada eiti pradeda baltas pestininkas "P"
+    figure = map[frCoord]; // Cia figura gauna is kur ji atejo
     showFigureAt(frCoord, '1');
     showFigureAt(toCoord, figure);
     setDraggable();
@@ -114,6 +115,7 @@ function isBlackSquareAt(coord){
 }
 
 function showFigureAt(coord, figure) {
+    map[coord] = figure;
     $('#s' + coord).html(divFigure
         .replace('$coord', coord)
         .replace('$figure', getChessSymbol(figure)));
