@@ -98,7 +98,8 @@ body > * {
 
             p {
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
-                padding: 6px 6px;
+                font-size: 14px;
+                padding: 5px 5px;
             }
 
         .footer {

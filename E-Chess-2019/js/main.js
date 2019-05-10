@@ -2,7 +2,6 @@ var map;
 var divSquare = '<div id="s$coord" class="square $color"></div>'; // mazoji "s" reiskia "square", "coord" - koordinate
 var divFigure = '<div id="f$coord" class="figure">$figure</div>'; // mazoji "f" reiskia "figure", "coord" - koordinate
 
-
 //------------------------ Dolerio zenklas pries "function naudojamas tam, kad priristi f-ja prie ivykio!!!. Svarbu"
 $(function() { 
     start();
@@ -10,25 +9,13 @@ $(function() {
 
 //------------------------ Daug visur visko inicializuota, todel reikia naujos f-jos viskam, kas vyksta pacioje pradzioje
 function start() { 
-    map = new Array(64);
-    setHeader();
-    setFooter();
-    setLeftSide();
-    setMidSide();
-
-    // $('.board').html('');
-    // $('.board').append('<div class="square white"><div class="figure">&#9814</div></div>');
-    // $('.board').append('<div class="square black"><div class="figure">&#9820</div></div>');
-
+    map = new Array(64);    // Figuru masyvas
+    setHeader();            // Lentos virsutinines raides          
+    setFooter();            // Lentos apatines raides 
+    setLeftSide();          // Lentos kaires puses skaiciai
+    setMidSide();           // Lentos desines puses skaiciai
     addSquares();
     showFigures('rnbqkbnrpppppppp11111111111111111111111111111111PPPPPPPPRNBQKBNR');
-
-    // Is https://lichess.org/editor (kaip "FEN") imamos reiksmes figuroms. Svarbu, kad butu 64 simboliai
-    // Virsutine f-ja yra parasyta vietoj apacioje esanciu
-    // showFigureAt(0, 'r');
-    // ...
-    // showFigureAt(63, 'R');
-
     setDraggable ();
 }
 
@@ -76,21 +63,49 @@ function setDroppable() {
         drop: function(event,ui) {
                 var frCoord = ui.draggable.attr('id').substring(1); // "substring(1)" nuima pirma raide pries $
                 var toCoord = this.id.substring(1);
-                console.log(event);
-                console.log(ui);
+                // console.log(event);
+                // console.log(ui);
                 moveFigure(frCoord, toCoord);
               }
     }); 
 }
 
+function whatMove ( ){ // ją įdėk į "function moveFigure(frCoord, toCoord)"
+    var figureName = '';
+    if (figure === 'P' || figure === 'p') { figureName = 'pėstininkas'; }
+    if (figure === 'K' || figure === 'k') { figureName = 'Karalius'; }
+    if (figure === 'Q' || figure === 'q') { figureName = 'Karalienė'; }
+    if (figure === 'R' || figure === 'r') { figureName = 'bokštas'; }
+    if (figure === 'B' || figure === 'b') { figureName = 'rikis'; }
+    if (figure === 'N' || figure === 'n') { figureName = 'žirgas'; }
+    if (figure == figure.toUpperCase()) { 
+        $('.left-p').append('<p>'+ figureName +' : '+ event +'</p>');
+    } else {
+        $('.right-p').append('<p>'+ figureName +' : '+ event +'</p>');
+    }
+}
+
 function moveFigure(frCoord, toCoord) {
-    console.log('// ---');
-    console.log('move from: '+ frCoord +' to: '+ toCoord);
-    figure = 'P'; // Visada eiti pradeda baltas pestininkas "P"
-    figure = map[frCoord]; // Cia figura gauna is kur ji atejo
+    var letters = ('bcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha');
+    var numbers = ('8888888877777777666666665555555544444444333333332222222211111111');
+    var move_from = '';
+    var move_to = '';
+    for (var i = 0; i < frCoord; i++) {
+        if (i+1 == frCoord){
+            move_from = letters[i] + numbers[i];
+        }
+    }
+        for (var i = 0; i < toCoord; i++) {
+            if (i+1 == toCoord){
+                move_to = letters[i] + numbers[i];
+            }
+        }
+    event = move_from +' - '+ move_to;
+    figure = map[frCoord];
     showFigureAt(frCoord, '1');
     showFigureAt(toCoord, figure);
     setDraggable();
+    whatMove ();
 }
 
 function addSquares(){
