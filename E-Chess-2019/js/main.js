@@ -1,57 +1,35 @@
 var map;
-var divSquare = '<div id="s$coord" class="square $color"></div>'; // mazoji "s" reiskia "square", "coord" - koordinate
-var divFigure = '<div id="f$coord" class="figure">$figure</div>'; // mazoji "f" reiskia "figure", "coord" - koordinate
+var divSquare = '<div id="s$coord" class="square $color"></div>';
+var divFigure = '<div id="f$coord" class="figure">$figure</div>';
 
-//------------------------ Dolerio zenklas pries "function naudojamas tam, kad priristi f-ja prie ivykio!!!. Svarbu"
 $(function() { 
     start();
 });
 
 //------------------------ Daug visur visko inicializuota, todel reikia naujos f-jos viskam, kas vyksta pacioje pradzioje
 function start() { 
-    map = new Array(64);    // Figuru masyvas
-    setHeader();            // Lentos virsutinines raides          
-    setFooter();            // Lentos apatines raides 
-    setLeftSide();          // Lentos kaires puses skaiciai
-    setMidSide();           // Lentos desines puses skaiciai
+    map = new Array(64);    
+    setHeaderSidesFooter();                            
     addSquares();
     showFigures('rnbqkbnrpppppppp11111111111111111111111111111111PPPPPPPPRNBQKBNR');
     setDraggable ();
 }
 
 //---------------------------- Prasideda raidziu is skaiciu spanai ------------------------
-function setHeader() {
+function setHeaderSidesFooter() {
     var letter = ('abcdefgh');
+    var numbers = ('87654321');
     $('.header').html('');
-    for (var i=0; i<8; i++) { 
-        $('.header').append('<span class="letter">'+ letter[i] +'</span>');
-    }
-}
-
-function setFooter() {
-    var letter = ('abcdefgh');
     $('.footer').html('');
-    for (var i=0; i<8; i++) { 
-        $('.footer').append('<span class="letter">'+ letter[i] +'</span>');
-    }
-}
-
-function setLeftSide() {
-    var numbers = ('87654321');
     $('.left-side').html('');
-    for (var i=0; i<8; i++) { 
-        $('.left-side').append('<span class="numbers">'+ numbers[i] +'</span>');
-    }
-}
-
-function setMidSide() {
-    var numbers = ('87654321');
     $('mid-side').html('');
     for (var i=0; i<8; i++) { 
-        $('.mid-side').append('<span class="numbers">'+ numbers[i] +'</span>');
+        $('.header').append('<span class="letter">'+ letter[i] +'</span>');
+        $('.footer').append('<span class="letter">'+ letter[i] +'</span>');
+        $('.left-side').append('<span class="numbers">'+ numbers[i] +'</span>');
+        $('.mid-side').append('<span class="numbers">'+ numbers[i] +'</span>');        
     }
 }
-//---------------------------- Baigiasi raidziu is skaiciu spanai ------------------------
 
 //---------------------------- Prasideda darbas su sachmatu lenta, figuromis, draginimu --
 function setDraggable() {
@@ -61,16 +39,14 @@ function setDraggable() {
 function setDroppable() {
     $('.square').droppable( {
         drop: function(event,ui) {
-                var frCoord = ui.draggable.attr('id').substring(1); // "substring(1)" nuima pirma raide pries $
-                var toCoord = this.id.substring(1);
-                // console.log(event);
-                // console.log(ui);
-                moveFigure(frCoord, toCoord);
-              }
+            var frCoord = ui.draggable.attr('id').substring(1); // "substring(1)" nuima pirma raide pries $
+            var toCoord = this.id.substring(1);
+            moveFigure(frCoord, toCoord);
+        }
     }); 
 }
 
-function whatMove ( ){ // ją įdėk į "function moveFigure(frCoord, toCoord)"
+function whatMove ( ) {
     var figureName = '';
     if (figure === 'P' || figure === 'p') { figureName = 'pėstininkas'; }
     if (figure === 'K' || figure === 'k') { figureName = 'Karalius'; }
@@ -96,7 +72,7 @@ function moveFigure(frCoord, toCoord) {
         }
     }
         for (var i = 0; i < toCoord; i++) {
-            if (i+1 == toCoord){
+            if (i+1 == toCoord) {
                 move_to = letters[i] + numbers[i];
             }
         }
@@ -108,11 +84,9 @@ function moveFigure(frCoord, toCoord) {
     whatMove ();
 }
 
-function addSquares(){
+function addSquares() {
     $('.board').html('');
     for (var coord = 0; coord < 64; coord++) {
-        // $('.board').append(divSquare.replace('$color', 'white'));
-        // $('.board').append(divSquare.replace('$color', 'black'));
         $('.board').append(divSquare
             .replace('$coord', coord) // duodamos koordinates per ID
             .replace('$color', isBlackSquareAt(coord) ? 'black' : 'white'));
@@ -125,7 +99,7 @@ function showFigures(figures) {
     }
 }
 
-function isBlackSquareAt(coord){
+function isBlackSquareAt(coord) {
     return (coord % 8 + Math.floor(coord / 8)) % 2; // "Math.round" netinka, nes penkti langeliai kartoja ketvirtus
 }
 
